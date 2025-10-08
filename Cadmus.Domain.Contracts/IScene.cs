@@ -4,5 +4,5 @@ namespace Cadmus.Domain.Contracts;
 
 public interface IScene : IEntity
 {
-    // public ReadOnlyCollection<IEntity> Entities { get; }
+    ReadOnlyDictionary<Guid, IEntity> Entities { get; }
 }

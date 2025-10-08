@@ -2,5 +2,5 @@ namespace Cadmus.Domain.Contracts;
 
 public interface IEntity : IComposeComponent
 {
-    public Guid id { get; }
+    public Guid Id { get; }
 }
