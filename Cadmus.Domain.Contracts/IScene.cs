@@ -1,8 +1,13 @@
-using System.Collections.ObjectModel;
-
 namespace Cadmus.Domain.Contracts;
 
-public interface IScene : IEntity
+public interface IScene : IComposeComponent
 {
-    ReadOnlyDictionary<Guid, IEntity> Entities { get; }
+    IReadOnlyDictionary<Guid, IEntity> Entities { get; }
+
+    void AddEntity(IEntity entity);
+    bool RemoveEntity(Guid entityId);
+    Task LoadAsync();
+    Task UpdateAsync();
+    Task UnloadAsync();
+    IEntity? GetEntity(Guid entityId);
 }

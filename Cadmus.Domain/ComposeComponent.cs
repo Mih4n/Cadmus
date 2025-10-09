@@ -1,4 +1,3 @@
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace Cadmus.Domain;
@@ -7,16 +6,16 @@ public class ComposeComponent : IComposeComponent
 {
     Dictionary<Type, IComponent> components = [];
 
-    public void AddComponent(IComponent component)
+    public void SetComponent(IComponent component)
     {
-        components.Add(component.GetType(), component);
+        components[component.GetType()] = component;
     }
 
-    public void AddComponents(params IEnumerable<IComponent> components)
+    public void SetComponents(params IEnumerable<IComponent> components)
     {
         foreach (var component in components) 
         {
-            AddComponent(component);
+            SetComponent(component);
         }
     }
 

@@ -1,0 +1,51 @@
+using Cadmus.Domain.Contracts;
+
+namespace Cadmus.Domain;
+
+public class Scene : ComposeComponent, IScene
+{
+    private readonly Dictionary<Guid, IEntity> entities = [];
+    
+    public IReadOnlyDictionary<Guid, IEntity> Entities => entities;
+
+    public void AddEntity(IEntity entity)
+    {
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity));
+        }
+
+        if (entities.ContainsKey(entity.Id))
+        {
+            throw new InvalidOperationException($"Entity with ID {entity.Id} already exists in the scene.");
+        }
+
+        entities.Add(entity.Id, entity);
+    }
+
+    public bool RemoveEntity(Guid entityId)
+    {
+        return entities.Remove(entityId);
+    }
+
+    public IEntity? GetEntity(Guid entityId)
+    {
+        entities.TryGetValue(entityId, out var entity);
+        return entity;
+    }
+    
+    public Task LoadAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task UpdateAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task UnloadAsync()
+    {
+        return Task.CompletedTask;
+    }
+}   

@@ -1,13 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
+using Cadmus.Domain.Contracts;
 
 namespace Cadmus.Domain;
 
-public interface IComposeComponent : IComponent
+public interface IComposeComponent : IComponent, IReadOnlyComposeComponent
 {
-    T? GetComponent<T>() where T : IComponent;
-    bool TryGetComponent<T>([MaybeNullWhen(false)] out T component) where T : IComponent;
-    bool HasComponent<T>() where T : IComponent;    
-    void AddComponent(IComponent component);
-    void AddComponents(params IEnumerable<IComponent> components);
+    void SetComponent(IComponent component);
+    void SetComponents(params IEnumerable<IComponent> components);
     void RemoveComponent<T>() where T : IComponent;
 }
