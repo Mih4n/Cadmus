@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.Domain", "Cadmus.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.App", "Cadmus.App\Cadmus.App.csproj", "{AED63C28-213B-400B-9756-348941344038}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{245532BB-4261-4666-B97D-B687A01496FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{AED63C28-213B-400B-9756-348941344038}.Release|x64.Build.0 = Release|Any CPU
 		{AED63C28-213B-400B-9756-348941344038}.Release|x86.ActiveCfg = Release|Any CPU
 		{AED63C28-213B-400B-9756-348941344038}.Release|x86.Build.0 = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|x64.Build.0 = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|x64.ActiveCfg = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|x64.Build.0 = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{245532BB-4261-4666-B97D-B687A01496FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
