@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../Cadmus.Domain.Contracts/Cadmus.Domain.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
