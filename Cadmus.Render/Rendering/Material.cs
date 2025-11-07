@@ -1,15 +1,13 @@
-using Cadmus.Domain.Contracts.Rendering;
+using Veldrid;
 
 namespace Cadmus.Render.Rendering;
 
 public class Material
 {
-    public IShader Shader { get; }
-    public object[] Textures { get; }
+    public Texture[] Textures { get; }
 
-    public Material(IShader shader, params object[] textures)
+    public Material(params Texture[] textures)
     {
-        Shader = shader;
         Textures = textures ?? [];
     }
 }

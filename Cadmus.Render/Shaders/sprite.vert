@@ -1,13 +1,14 @@
 #version 450
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 color;
-layout(location = 2) in vec2 uv;
+// layout(location = 1) in vec3 color; // УБРАНО
+layout(location = 1) in vec2 uv; // ИЗМЕНЕНО: location = 1
 
-layout(location = 0) out vec3 fragColor;
-layout(location = 1) out vec2 fragUV;
+// layout(location = 0) out vec3 fragColor; // УБРАНО
+layout(location = 0) out vec2 fragUV; // ИЗМЕНЕНО: location = 0
 
-layout(std140, binding = 0) uniform Matrices
+// ИЗМЕНЕНО: Добавлен 'set = 0'
+layout(set = 0, std140, binding = 0) uniform Matrices
 {
     mat4 u_ViewProj;
     mat4 u_Model;
@@ -15,7 +16,7 @@ layout(std140, binding = 0) uniform Matrices
 
 void main()
 {
-    fragColor = color;
+    // fragColor = color; // УБРАНО
     fragUV = uv;
     gl_Position = u_ViewProj * u_Model * vec4(position, 1);
 }

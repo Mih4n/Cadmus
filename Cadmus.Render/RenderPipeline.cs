@@ -36,13 +36,7 @@ public class RenderPipeline
         foreach (var sprite in sorted)
         {
             var model = sprite.ComputeModelMatrix();
-            var shader = sprite.Material.Shader;
-
-            shader.Model = model;
-            shader.Projection = viewProjection;
-            shader.BindTextures(sprite.Material.Textures);
-
-            backend.DrawSprite(sprite);
+            backend.DrawSprite(sprite, viewProjection);
         }
 
         backend?.EndFrame();
