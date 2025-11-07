@@ -1,82 +1,84 @@
+using System.Numerics;
 using Cadmus.Domain.Contracts.Game;
 using Cadmus.Domain.Contracts.Systems;
+using Cadmus.Render;
+using Cadmus.Render.Camera;
+using Cadmus.Render.Rendering;
 using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
 
 public sealed class VulkanRenderer : ISystem, IDisposable
 {
-    private Sdl2Window? window;
-    private CommandList? commandList;
-    private GraphicsDevice? graphicsDevice;
+    private Sdl2Window window;
+    private CommandList commands;
+    private GraphicsDevice device;
 
-    private bool initialized;
+    private Camera2D camera;
+    private RenderPipeline pipeline;
+    private VulkanRenderBackend backend;
 
-    public void Initialize()
+    public VulkanRenderer()
     {
-        if (initialized) return;
-
-        var windowCI = new WindowCreateInfo
-        {
-            X = 50,
-            Y = 50,
-            WindowWidth = 800,
-            WindowHeight = 600,
-            WindowTitle = "Cadmus + Vulkan (Veldrid)"
-        };
-
+        var windowCI = new WindowCreateInfo { X = 100, Y = 100, WindowWidth = 800, WindowHeight = 600, WindowTitle = "Cadmus" };
         window = VeldridStartup.CreateWindow(ref windowCI);
+        var options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
+        device = VeldridStartup.CreateVulkanGraphicsDevice(options, window);
+        commands = device.ResourceFactory.CreateCommandList();
 
-        var options = new GraphicsDeviceOptions(
-            debug: false,
-            swapchainDepthFormat: null,
-            syncToVerticalBlank: true,
-            resourceBindingModel: ResourceBindingModel.Improved
-        );
+        camera = new Camera2D { ViewportWidth = 800, ViewportHeight = 600, Position = new System.Numerics.Vector2(400, 300) };
 
-        graphicsDevice = VeldridStartup.CreateVulkanGraphicsDevice(
-            options,
-            window
-        );
+        backend = new VulkanRenderBackend(device, commands);
 
-        commandList = graphicsDevice.ResourceFactory.CreateCommandList();
-
-        initialized = true;
+        pipeline = new RenderPipeline(camera, backend);
     }
 
     public Task Update(IGameContext context)
     {
-        if (!initialized)
-            Initialize();
-
-        if (window is null) return Task.CompletedTask;
-        if (commandList is null) return Task.CompletedTask;
-        if (graphicsDevice is null) return Task.CompletedTask;
-
-        if (!window.Exists)
-            return Task.CompletedTask;
-
-        // process window input / close events
         window.PumpEvents();
+        commands.Begin();
+        commands.SetFramebuffer(device.SwapchainFramebuffer);
+        commands.ClearColorTarget(0, new RgbaFloat(0.2f, 0.4f, 1.0f, 1.0f));
+        // commands.ClearDepthStencil(1f);
 
-        commandList.Begin();
-        commandList.SetFramebuffer(graphicsDevice.SwapchainFramebuffer);
-        commandList.ClearColorTarget(0, new RgbaFloat(0.2f, 0.4f, 1.0f, 1.0f)); // чёрный фон
+        // Here: fill pipeline with sprites from the game world.
+        // For demonstration, you might have game provide sprites via context or have a test submission.
+        // But pipeline.BeginFrame/EndFrame will now use backend.DrawSprite which records draws to commandList.
 
-        // Тут в будущем: SetPipeline(...) + Draw(...)
+        // IMPORTANT: Veldrid expects commands recorded with the same CommandList instance that is used here.
+        // Our backend.DrawSprite uses the `cl` reference given at Initialize and calls DrawIndexed on it.
+        // Make sure backend was initialized with the same commandList instance.
 
-        commandList.End();
-        graphicsDevice.SubmitCommands(commandList);
-        graphicsDevice.SwapBuffers();
-        graphicsDevice.WaitForIdle();
+        pipeline.BeginFrame();
+
+        // --- demo: create a simple sprite and submit (in real engine sprites come from scenes/entities)
+        // (This block is optional and only for quick demo testing; remove in production)
+        
+        var shader = new Cadmus.Render.Rendering.Shader() { Name = "Test" };
+        var material = new Material(shader);
+        var quad = Mesh.CreateUnitQuad();
+        var sprite = new Sprite(quad, material)
+        {
+            Position = new Vector3(200, 200, 0),
+            Scale = new Vector2(64, 64)
+        };
+        pipeline.SubmitSprite(sprite);
+
+        pipeline.EndFrame();
+
+        commands.End();
+        device.SubmitCommands(commands);
+        device.SwapBuffers();
+        device.WaitForIdle();
 
         return Task.CompletedTask;
     }
 
     public void Dispose()
     {
-        commandList?.Dispose();
-        graphicsDevice?.Dispose();
-        window?.Close();
+        backend?.Dispose();
+        commands?.Dispose();
+        device?.Dispose();
     }
 }
+

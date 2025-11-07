@@ -10,4 +10,10 @@
     <ProjectReference Include="../Cadmus.Domain.Contracts/Cadmus.Domain.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Shaders/**/*.spv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>          
+    </Content>
+  </ItemGroup>
+
 </Project>

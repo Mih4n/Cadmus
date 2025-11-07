@@ -10,11 +10,14 @@
         pkgs = import nixpkgs { inherit system; };
     in {
         devShells.${system}.default = pkgs.mkShell {
-            buildInputs = [
-                pkgs.SDL2
-                pkgs.vulkan-tools
-                pkgs.vulkan-headers
-                pkgs.vulkan-loader
+            buildInputs = with pkgs; [
+                SDL2
+                vulkan-tools
+                vulkan-headers
+                vulkan-loader
+                glslang
+                spirv-tools
+                shaderc
             ];
 
             shellHook = ''

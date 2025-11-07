@@ -10,20 +10,16 @@ public class RenderPipeline
     private IRenderBackend backend;
     private readonly List<Sprite> submissions = new();
 
-    public RenderPipeline(Camera2D camera)
+    public RenderPipeline(Camera2D camera, IRenderBackend backend)
     {
-        Camera = camera ?? throw new ArgumentNullException(nameof(camera));
-    }
-
-    public void AttachBackend(IRenderBackend backend)
-    {
+        Camera = camera; 
         this.backend = backend;
     }
 
     public void BeginFrame()
     {
         submissions.Clear();
-        backend?.BeginFrame();
+        backend.BeginFrame();
     }
 
     public void SubmitSprite(Sprite sprite)
@@ -46,22 +42,9 @@ public class RenderPipeline
             shader.Projection = viewProjection;
             shader.BindTextures(sprite.Material.Textures);
 
-            if (backend != null)
-            {
-                backend.DrawSprite(sprite);
-            }
-            else
-            {
-                SimulateDraw(sprite);
-            }
+            backend.DrawSprite(sprite);
         }
 
         backend?.EndFrame();
-    }
-
-    private void SimulateDraw(Sprite sprite)
-    {
-        Console.WriteLine($"[Render] Draw Sprite at ({sprite.Position.X:F1},{sprite.Position.Y:F1},{sprite.Position.Z:F2}) " +
-                            $"scale({sprite.Scale.X:F2},{sprite.Scale.Y:F2}) shader={sprite.Material.Shader.Name}");
     }
 }
