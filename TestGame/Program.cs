@@ -20,7 +20,7 @@ public class SnakeGame : Game
 
         // Create snake head
         var snakeHead = new Entity();
-        snakeHead.SetComponents(
+        snakeHead.AddComponents(
             new PositionComponent { X = GridWidth / 2, Y = GridHeight / 2 },
             new DirectionComponent { DX = 0, DY = -1 },
             new SnakeSegmentComponent { IsHead = true }
@@ -37,7 +37,7 @@ public class SnakeGame : Game
     {
         var random = new Random();
         var food = new Entity();
-        food.SetComponents(
+        food.AddComponents(
             new PositionComponent { X = random.Next(0, GridWidth), Y = random.Next(0, GridHeight) },
             new FoodComponent()
         );

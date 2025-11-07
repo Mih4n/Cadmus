@@ -9,8 +9,8 @@ public class ButtonTrackingSystem : ISystem
 
     public Task Update(IGameContext context)
     {
-        // Check for key presses
-        if (Console.KeyAvailable)
+        // Check for key presses (non-blocking)
+        while (Console.KeyAvailable)
         {
             var key = Console.ReadKey(true).Key;
 
@@ -20,12 +20,12 @@ public class ButtonTrackingSystem : ISystem
                 Environment.Exit(0);
             }
 
-            // Track pressed keys
-            pressedKeys.Add(key);
-
-            // Update snake direction based on input
+            // Update snake direction based on input immediately
             UpdateSnakeDirection(context, key);
         }
+
+        // Clear pressed keys after processing
+        pressedKeys.Clear();
 
         return Task.CompletedTask;
     }
