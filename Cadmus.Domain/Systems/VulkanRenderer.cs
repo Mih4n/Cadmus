@@ -20,13 +20,13 @@ public sealed class VulkanRenderer : ISystem, IDisposable
 
     public VulkanRenderer()
     {
-        var windowCI = new WindowCreateInfo { X = 100, Y = 100, WindowWidth = 800, WindowHeight = 600, WindowTitle = "Cadmus" };
+        var windowCI = new WindowCreateInfo { WindowInitialState = WindowState.FullScreen, X = 0, Y = 0, WindowTitle = "Cadmus" };
         window = VeldridStartup.CreateWindow(ref windowCI);
         var options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
         device = VeldridStartup.CreateVulkanGraphicsDevice(options, window);
         commands = device.ResourceFactory.CreateCommandList();
 
-        camera = new Camera2D { ViewportWidth = 800, ViewportHeight = 600, Position = new System.Numerics.Vector2(400, 300) };
+        camera = new Camera2D { ViewportWidth = 800, ViewportHeight = 600, Position = new Vector2(400, 300) };
 
         backend = new VulkanRenderBackend(device, commands);
 
