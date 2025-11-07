@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Cadmus.Domain.Contracts;
+namespace Cadmus.Domain.Contracts.Components;
 
 public interface IReadOnlyComposeComponent
 {

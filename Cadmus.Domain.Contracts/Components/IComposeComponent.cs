@@ -1,6 +1,6 @@
 using Cadmus.Domain.Contracts;
 
-namespace Cadmus.Domain;
+namespace Cadmus.Domain.Contracts.Components;
 
 public interface IComposeComponent : IComponent, IReadOnlyComposeComponent
 {

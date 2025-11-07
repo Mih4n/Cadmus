@@ -1,6 +1,8 @@
-using Cadmus.Domain.Contracts;
+using Cadmus.Domain.Components;
+using Cadmus.Domain.Contracts.Components;
+using Cadmus.Domain.Contracts.Entities;
 
-namespace Cadmus.Domain;
+namespace Cadmus.App;
 
 public class Scene : ComposeComponent, IScene
 {

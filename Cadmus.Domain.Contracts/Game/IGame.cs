@@ -1,3 +1,6 @@
+using Cadmus.Domain.Contracts.Components;
+using Cadmus.Domain.Contracts.Systems;
+
 namespace Cadmus.Domain.Contracts;
 
 public interface IGame

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Cadmus.Domain.Contracts.Components;
 
-namespace Cadmus.Domain;
+namespace Cadmus.Domain.Components;
 
 public class ComposeComponent : IComposeComponent
 {

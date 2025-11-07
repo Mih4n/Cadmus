@@ -1,4 +1,4 @@
-﻿using Cadmus.Domain;
+﻿using Cadmus.App;
 
 public class SnakeGame : Game
 {

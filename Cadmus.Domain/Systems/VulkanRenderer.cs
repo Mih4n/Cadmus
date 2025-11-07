@@ -1,5 +1,5 @@
-using Cadmus.Domain;
-using Cadmus.Domain.Contracts;
+using Cadmus.Domain.Contracts.Game;
+using Cadmus.Domain.Contracts.Systems;
 using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;

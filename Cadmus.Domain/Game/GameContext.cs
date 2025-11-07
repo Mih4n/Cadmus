@@ -1,6 +1,8 @@
 using Cadmus.Domain.Contracts;
+using Cadmus.Domain.Contracts.Components;
+using Cadmus.Domain.Contracts.Game;
 
-namespace Cadmus.Domain;
+namespace Cadmus.Domain.Game;
 
 public class GameContext(IGame game) : IGameContext
 {

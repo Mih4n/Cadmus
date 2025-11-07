@@ -1,6 +1,8 @@
+using Cadmus.Domain.Components;
 using Cadmus.Domain.Contracts;
+using Cadmus.Domain.Contracts.Entities;
 
-namespace Cadmus.Domain;
+namespace Cadmus.Domain.Entities;
 
 public class Entity : ComposeComponent, IEntity
 {

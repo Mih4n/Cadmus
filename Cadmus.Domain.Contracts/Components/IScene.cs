@@ -1,4 +1,6 @@
-namespace Cadmus.Domain.Contracts;
+using Cadmus.Domain.Contracts.Entities;
+
+namespace Cadmus.Domain.Contracts.Components;
 
 public interface IScene : IComposeComponent
 {

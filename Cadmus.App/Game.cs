@@ -1,6 +1,10 @@
 using Cadmus.Domain.Contracts;
+using Cadmus.Domain.Contracts.Components;
+using Cadmus.Domain.Contracts.Game;
+using Cadmus.Domain.Contracts.Systems;
+using Cadmus.Domain.Game;
 
-namespace Cadmus.Domain;
+namespace Cadmus.App;
 
 public abstract class Game : IGame
 {
