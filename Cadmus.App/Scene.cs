@@ -10,7 +10,7 @@ public class Scene : ComposeComponent, IScene
     
     public IReadOnlyDictionary<Guid, IEntity> Entities => entities;
 
-    public void AddEntity(IEntity entity)
+    public IScene AddEntity(IEntity entity)
     {
         if (entity == null)
         {
@@ -23,11 +23,14 @@ public class Scene : ComposeComponent, IScene
         }
 
         entities.Add(entity.Id, entity);
+
+        return this;
     }
 
-    public bool RemoveEntity(Guid entityId)
+    public IScene RemoveEntity(Guid entityId)
     {
-        return entities.Remove(entityId);
+        entities.Remove(entityId);
+        return this;
     }
 
     public IEntity? GetEntity(Guid entityId)

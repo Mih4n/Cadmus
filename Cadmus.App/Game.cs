@@ -1,3 +1,4 @@
+using Cadmus.Domain.Components;
 using Cadmus.Domain.Contracts;
 using Cadmus.Domain.Contracts.Components;
 using Cadmus.Domain.Contracts.Game;
@@ -6,7 +7,7 @@ using Cadmus.Domain.Game;
 
 namespace Cadmus.App;
 
-public abstract class Game : IGame
+public abstract class Game : ComposeComponent, IGame 
 {
     private string? currentScene;
     private IGameContext context;

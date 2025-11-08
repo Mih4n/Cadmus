@@ -9,7 +9,7 @@ using Veldrid.ImageSharp;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
 
-namespace Cadmus.Domain.Systems;
+namespace Cadmus.Systems.Rendering;
 
 public sealed class VulkanRenderer : ISystem, IDisposable
 {

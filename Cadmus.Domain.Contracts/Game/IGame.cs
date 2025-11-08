@@ -3,7 +3,7 @@ using Cadmus.Domain.Contracts.Systems;
 
 namespace Cadmus.Domain.Contracts;
 
-public interface IGame
+public interface IGame : IComposeComponent
 {
     IScene? CurrentScene { get; }
     IReadOnlyDictionary<Type, ISystem> Systems { get; }

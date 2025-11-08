@@ -6,8 +6,8 @@ public interface IScene : IComposeComponent
 {
     IReadOnlyDictionary<Guid, IEntity> Entities { get; }
 
-    void AddEntity(IEntity entity);
-    bool RemoveEntity(Guid entityId);
+    IScene AddEntity(IEntity entity);
+    IScene RemoveEntity(Guid entityId);
     Task LoadAsync();
     Task UpdateAsync();
     Task UnloadAsync();

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.Render", "Cadmus.Render\Cadmus.Render.csproj", "{768A7925-EC65-4043-A46A-B82453857B33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.Systems", "Cadmus.Systems\Cadmus.Systems.csproj", "{2D26F585-BBDC-455C-A247-A30858913BBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{768A7925-EC65-4043-A46A-B82453857B33}.Release|x64.Build.0 = Release|Any CPU
 		{768A7925-EC65-4043-A46A-B82453857B33}.Release|x86.ActiveCfg = Release|Any CPU
 		{768A7925-EC65-4043-A46A-B82453857B33}.Release|x86.Build.0 = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x64.Build.0 = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,15 +1,35 @@
-﻿using Cadmus.App;
-using Cadmus.Domain.Systems;
+﻿using System.Numerics;
+using Cadmus.App;
+using Cadmus.Domain.Components;
+using Cadmus.Domain.Components.Sprites;
+using Cadmus.Domain.Entities;
+using Cadmus.Systems.Rendering;
 
 public class SnakeGame : Game
 {
-    private const int GridWidth = 20;
-    private const int GridHeight = 20;
-    private int score = 0;
-
     public override async Task InitializeAsync()
     {
         SetSystem(new VulkanRenderer());
+        RegisterScene("Main", new Scene());
+
+        await LoadSceneAsync("Main");
+
+        if (CurrentScene is null) throw new Exception("No scene defined");
+
+        CurrentScene.AddEntity(new Entity(
+                new SpriteComponent(
+                    "./Sprites/Test.png",
+                    new Vector2(10, 10),
+                    new PositionComponent(10, 10, 1)
+                ),
+                new SpriteComponent(
+                    "./Sprites/Test2.png",
+                    new Vector2(10, 10),
+                    new PositionComponent(0, 0, 0)
+                ),
+                new PositionComponent()
+            )
+        );
     }
 }
 
