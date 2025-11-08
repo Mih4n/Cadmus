@@ -62,11 +62,13 @@ public sealed class VulkanRenderer : ISystem, IDisposable
         // 3. Создаем спрайт
         testSprite = new Sprite(quad, material)
         {
-            Position = new Vector3(400, 300, 0), // В центре
+            Position = new Vector3(0, 0, 0), // В центре
             Scale = new Vector2(128, 128) // Покрупнее
         };
     }
-
+    
+    float speedX = 0.1f;
+    float speedY = 0.1f;
     public Task Update(IGameContext context)
     {
         if (window.Exists)
@@ -79,6 +81,26 @@ public sealed class VulkanRenderer : ISystem, IDisposable
             pipeline.BeginFrame();
 
             // Отправляем тот же спрайт каждый кадр
+            // Initialize these variables at class level
+ 
+
+            // In your update method
+            var position = testSprite.Position;
+
+            // Update position
+            position.X += speedX;
+            position.Y += speedY;
+
+            // Bounce logic
+            if (position.X >= 800 || position.X <= 0)
+                speedX = -speedX; // Reverse X direction
+
+            if (position.Y >= 600 || position.Y <= 0)
+                speedY = -speedY; // Reverse Y direction
+
+            Console.WriteLine($"{position.X}, {position.Y}, {speedX}, {speedY}");
+
+            testSprite.Position = position; 
             pipeline.SubmitSprite(testSprite); 
             
             pipeline.EndFrame(); 

@@ -5,7 +5,7 @@ namespace Cadmus.Domain.Components;
 
 public class ComposeComponent : IComposeComponent
 {
-    Dictionary<Type, List<IComponent>> components = [];
+    protected Dictionary<Type, List<IComponent>> components = [];
 
     public void AddComponent(IComponent component)
     {
