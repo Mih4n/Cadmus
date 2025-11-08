@@ -3,13 +3,11 @@ using Cadmus.App;
 using Cadmus.Domain.Components;
 using Cadmus.Domain.Components.Sprites;
 using Cadmus.Domain.Entities;
-using Cadmus.Systems.Rendering;
 
 public class SnakeGame : Game
 {
     public override async Task InitializeAsync()
     {
-        SetSystem(new VulkanRenderer());
         RegisterScene("Main", new Scene());
 
         await LoadSceneAsync("Main");

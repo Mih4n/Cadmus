@@ -1,3 +1,6 @@
+using System.Numerics;
+using Cadmus.Domain.Components;
+using Cadmus.Domain.Components.Sprites;
 using Cadmus.Render.Camera;
 using Cadmus.Render.Rendering;
 
@@ -8,7 +11,7 @@ public class RenderPipeline
     public Camera2D Camera { get; }
     
     private IRenderBackend backend;
-    private readonly List<Sprite> submissions = new();
+    private readonly List<SpriteComponent> submissions = new();
 
     public RenderPipeline(Camera2D camera, IRenderBackend backend)
     {
@@ -22,7 +25,7 @@ public class RenderPipeline
         backend.BeginFrame();
     }
 
-    public void SubmitSprite(Sprite sprite)
+    public void SubmitSprite(SpriteComponent sprite)
     {
         if (sprite is null) throw new ArgumentNullException(nameof(sprite));
         submissions.Add(sprite);
@@ -30,7 +33,9 @@ public class RenderPipeline
 
     public void EndFrame()
     {
-        var sorted = submissions.OrderBy(s => s.Position.Z).ToArray();
+        var sorted = submissions
+            .OrderBy(s => s.TryGetComponent<PositionComponent>(out var component) ? component.X : 0)
+            .ToArray();
         var viewProjection = Camera.GetViewProjection();
 
         foreach (var sprite in sorted)

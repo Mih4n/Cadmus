@@ -1,6 +1,6 @@
 using System.Numerics;
 using Cadmus.Domain.Contracts.Components;
-using Cadmus.Render.Rendering;
+using Cadmus.Domain.Rendering;
 using Veldrid;
 
 namespace Cadmus.Domain.Components.Sprites;

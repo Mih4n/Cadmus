@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../Cadmus.Domain.Contracts/Cadmus.Domain.Contracts.csproj" />
+    <ProjectReference Include="../Cadmus.Domain/Cadmus.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,11 @@
 using Cadmus.Domain.Components;
+using Cadmus.Domain.Components.Rendering;
 using Cadmus.Domain.Contracts;
 using Cadmus.Domain.Contracts.Components;
 using Cadmus.Domain.Contracts.Game;
 using Cadmus.Domain.Contracts.Systems;
 using Cadmus.Domain.Game;
+using Cadmus.Systems.Rendering;
 
 namespace Cadmus.App;
 
@@ -21,6 +23,8 @@ public abstract class Game : ComposeComponent, IGame
     public Game()
     {
         context = new GameContext(this);
+        SetSystem(new VulkanRenderer(context));
+        AddComponent(new VulkanRenderingContextComponent());
     }
 
     public abstract Task InitializeAsync();

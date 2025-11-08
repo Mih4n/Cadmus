@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Cadmus.Render.Rendering;
+namespace Cadmus.Domain.Rendering;
 
 public class Mesh
 {
