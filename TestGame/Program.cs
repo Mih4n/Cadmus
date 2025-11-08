@@ -16,16 +16,16 @@ public class SnakeGame : Game
 
         CurrentScene.AddEntity(new Entity(
                 new SpriteComponent(
-                    "./Sprites/Test.png",
+                    "Sprites/Test.png",
                     new Vector2(10, 10),
                     new PositionComponent(10, 10, 1)
                 ),
                 new SpriteComponent(
-                    "./Sprites/Test2.png",
+                    "Sprites/Test2.png",
                     new Vector2(10, 10),
                     new PositionComponent(0, 0, 0)
                 ),
-                new PositionComponent()
+                new PositionComponent(200, 400, 0)
             )
         );
     }

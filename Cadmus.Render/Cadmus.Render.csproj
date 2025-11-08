@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Shaders/**/*.spv">
+    <Content Include="Assets/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>          
     </Content>
   </ItemGroup>

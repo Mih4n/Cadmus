@@ -23,8 +23,10 @@ public abstract class Game : ComposeComponent, IGame
     public Game()
     {
         context = new GameContext(this);
-        SetSystem(new VulkanRenderer(context));
         AddComponent(new VulkanRenderingContextComponent());
+        
+        SetSystem(new VulkanRenderer(context));
+        SetSystem(new TextureLoadSystem(context));
     }
 
     public abstract Task InitializeAsync();

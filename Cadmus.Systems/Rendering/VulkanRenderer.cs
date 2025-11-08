@@ -51,7 +51,8 @@ public sealed class VulkanRenderer : ISystem, IDisposable
 
             foreach (var sprite in entity.GetComponents<SpriteComponent>())
             {
-                pipeline.SubmitSprite(sprite);
+                if (sprite.Loaded)
+                    pipeline.SubmitSprite(sprite);
             }
         }
         

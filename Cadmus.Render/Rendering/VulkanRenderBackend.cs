@@ -61,7 +61,7 @@ public class VulkanRenderBackend : IRenderBackend
         device.UpdateBuffer(vertexBuffer, 0, QuadVertices);
         device.UpdateBuffer(indexBuffer, 0, QuadIndices);
 
-        var basePath = Path.Combine(AppContext.BaseDirectory, "Shaders");
+        var basePath = Path.Combine(AppContext.BaseDirectory, "Assets/Shaders");
         var vertPath = Path.Combine(basePath, "sprite.vert.spv");
         var fragPath = Path.Combine(basePath, "sprite.frag.spv");
 
