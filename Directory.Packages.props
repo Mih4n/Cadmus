@@ -4,6 +4,7 @@
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Silk.NET" Version="2.22.0" />
     <PackageVersion Include="Veldrid" Version="4.9.0" />
     <PackageVersion Include="Veldrid.ImageSharp" Version="4.9.0" />
     <PackageVersion Include="Veldrid.SDL2" Version="4.9.0" />

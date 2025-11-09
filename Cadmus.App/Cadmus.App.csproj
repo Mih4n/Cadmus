@@ -1,17 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="../Cadmus.Render/Cadmus.Render.csproj" />
     <ProjectReference Include="../Cadmus.Systems/Cadmus.Systems.csproj" />
-    <ProjectReference Include="..\Cadmus.Domain.Contracts\Cadmus.Domain.Contracts.csproj" />
-    <ProjectReference Include="..\Cadmus.Domain\Cadmus.Domain.csproj" />
+    <ProjectReference Include="../Cadmus.Domain.Contracts/Cadmus.Domain.Contracts.csproj" />
+    <ProjectReference Include="../Cadmus.Domain/Cadmus.Domain.csproj" />
   </ItemGroup>
 
 </Project>

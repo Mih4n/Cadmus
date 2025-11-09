@@ -1,16 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Cadmus.Domain.Contracts\Cadmus.Domain.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Silk.NET" />
     <PackageReference Include="Veldrid" />
     <PackageReference Include="Veldrid.ImageSharp" />
     <PackageReference Include="Veldrid.SDL2" />
