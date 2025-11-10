@@ -1,9 +1,3 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <PackageReference Include="Veldrid" />
-    <PackageReference Include="Veldrid.SDL2" />
-    <PackageReference Include="Veldrid.StartupUtilities" />
-  </ItemGroup>
-  
 </Project>

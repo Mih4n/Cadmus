@@ -20,7 +20,7 @@ public class VulkanRenderingContext : IComponent, IDisposable
     {
         var options = WindowOptions.DefaultVulkan with
         {
-            Size = new Vector2D<int>(600, 800),
+            Size = new Vector2D<int>(800, 600),
             Title = "Cadmus"
         };
 

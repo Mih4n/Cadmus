@@ -1,7 +1,6 @@
 using System.Numerics;
 using Cadmus.Domain.Contracts.Components;
 using Cadmus.Domain.Rendering;
-using Veldrid;
 
 namespace Cadmus.Domain.Components.Sprites;
 
@@ -13,7 +12,6 @@ public class SpriteComponent : ComposeComponent
     public Vector2 Scale { get; set; }
 
     public bool Loaded { get; set; }
-    public Texture? Texture { get; set; }
 
     private static PositionComponent relativePositionBase = Vector3.Zero;
 
