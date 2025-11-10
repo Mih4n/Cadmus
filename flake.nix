@@ -16,12 +16,19 @@
                 vulkan-headers
                 vulkan-loader
                 glslang
+                glfw
+                libGL
+                libxi
+                libxcursor
+                libxrandr
+                libxinerama
                 spirv-tools
                 shaderc
             ];
 
             shellHook = ''
                 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.SDL2}/lib
+                export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.glfw}/lib"
                 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.vulkan-loader}/lib
             '';
         };
