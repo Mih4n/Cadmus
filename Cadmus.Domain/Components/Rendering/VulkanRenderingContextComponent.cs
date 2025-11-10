@@ -1,46 +1,46 @@
 using Cadmus.Domain.Contracts.Components;
-using Veldrid;
-using Veldrid.Sdl2;
-using Veldrid.StartupUtilities;
+using Silk.NET.Maths;
+using Silk.NET.Vulkan;
+using Silk.NET.Windowing;
 
 namespace Cadmus.Domain.Components.Rendering;
 
-public class VulkanRenderingContextComponent : IComponent, IDisposable
+public class VulkanRenderingContext : IComponent, IDisposable
 {
-    public Sdl2Window Window { get; set; }
-    public CommandList Commands { get; set; }
-    public GraphicsDevice Device { get; set; }
+    public Vk Vulkan = null!;
+    public IWindow Window = null!;
 
-    public VulkanRenderingContextComponent()
+    public VulkanRenderingContext()
     {
-        var deviceOptions = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
-        var windowCreateInfo = new WindowCreateInfo 
-        { 
-            WindowInitialState = WindowState.Normal, 
-            X = 100, 
-            Y = 100, 
-            WindowWidth = 800, 
-            WindowHeight = 600, 
-            WindowTitle = "Cadmus" 
-        };
-
-        Window = VeldridStartup.CreateWindow(ref windowCreateInfo);
-        Device = VeldridStartup.CreateVulkanGraphicsDevice(deviceOptions, Window);
-        Commands = Device.ResourceFactory.CreateCommandList();
+        InitVulkan();
+        InitWindow();
     }
 
-    public VulkanRenderingContextComponent(Sdl2Window window, CommandList commands, GraphicsDevice device)
+    public void InitWindow()
     {
-        Window = window;
-        Device = device;
-        Commands = commands;
+        var options = WindowOptions.DefaultVulkan with
+        {
+            Size = new Vector2D<int>(600, 800),
+            Title = "Cadmus"
+        };
+
+        Window = Silk.NET.Windowing.Window.Create(options);
+        Window.Initialize();
+
+        if (Window.VkSurface is null)
+        {
+            throw new Exception("Windowing platform doesn't support Vulkan.");
+        }
+    }
+
+    public void InitVulkan()
+    {
+        Vulkan = Vk.GetApi();
     }
 
     public void Dispose()
     {
-        Device.WaitForIdle();
-        Commands.Dispose();
-        Device.Dispose();
-        Window.Close();
+        Window.Dispose();
+        Vulkan.Dispose();
     }
 }

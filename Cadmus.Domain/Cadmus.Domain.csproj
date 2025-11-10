@@ -6,10 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Silk.NET" />
-    <PackageReference Include="Veldrid" />
-    <PackageReference Include="Veldrid.ImageSharp" />
-    <PackageReference Include="Veldrid.SDL2" />
-    <PackageReference Include="Veldrid.StartupUtilities" />
   </ItemGroup>
 
 </Project>

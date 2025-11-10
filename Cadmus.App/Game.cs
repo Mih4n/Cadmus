@@ -6,11 +6,13 @@ using Cadmus.Domain.Contracts.Game;
 using Cadmus.Domain.Contracts.Systems;
 using Cadmus.Domain.Game;
 using Cadmus.Systems.Rendering;
+using Silk.NET.Windowing;
 
 namespace Cadmus.App;
 
 public abstract class Game : ComposeComponent, IGame 
 {
+    private Task WindowTask;
     private string? currentScene;
     private IGameContext context;
     private Dictionary<Type, ISystem> systems = [];
@@ -23,10 +25,13 @@ public abstract class Game : ComposeComponent, IGame
     public Game()
     {
         context = new GameContext(this);
-        AddComponent(new VulkanRenderingContextComponent());
+        var renderContext = new VulkanRenderingContext();
+        AddComponent(renderContext);
         
         SetSystem(new VulkanRenderer(context));
         SetSystem(new TextureLoadSystem(context));
+
+        WindowTask = Task.Run(() => renderContext.Window.Run());
     }
 
     public abstract Task InitializeAsync();
