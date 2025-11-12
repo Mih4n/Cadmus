@@ -31,7 +31,7 @@ public abstract class Game : ComposeComponent, IGame
         SetSystem(new VulkanRenderer(context));
         SetSystem(new TextureLoadSystem(context));
 
-        WindowTask = Task.Run(() => renderContext.Window.Run());
+       renderContext.Window.Run();
     }
 
     public abstract Task InitializeAsync();

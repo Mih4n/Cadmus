@@ -16,8 +16,8 @@ public unsafe class VulkanRenderingContext : IComponent, IDisposable
 
     public VulkanRenderingContext()
     {
-        InitVulkan();
         InitWindow();
+        InitVulkan();
     }
 
     public void InitWindow()
@@ -48,9 +48,9 @@ public unsafe class VulkanRenderingContext : IComponent, IDisposable
         ApplicationInfo appInfo = new()
         {
             SType = StructureType.ApplicationInfo,
-            PApplicationName = (byte*)Marshal.StringToHGlobalAnsi("Hello Triangle"),
+            PApplicationName = (byte*)Marshal.StringToHGlobalAnsi("Cadmus"),
             ApplicationVersion = new Version32(1, 0, 0),
-            PEngineName = (byte*)Marshal.StringToHGlobalAnsi("No Engine"),
+            PEngineName = (byte*)Marshal.StringToHGlobalAnsi("Cadmus"),
             EngineVersion = new Version32(1, 0, 0),
             ApiVersion = Vk.Version12
         };
@@ -61,7 +61,9 @@ public unsafe class VulkanRenderingContext : IComponent, IDisposable
             PApplicationInfo = &appInfo
         };
 
-        var glfwExtensions = Window.VkSurface!.GetRequiredExtensions(out var glfwExtensionCount);
+        if (Window.VkSurface is null) throw new Exception("No vulkan api");
+
+        var glfwExtensions = Window.VkSurface.GetRequiredExtensions(out var glfwExtensionCount);
 
         createInfo.EnabledExtensionCount = glfwExtensionCount;
         createInfo.PpEnabledExtensionNames = glfwExtensions;
