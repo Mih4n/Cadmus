@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="../Cadmus.Domain.Contracts/Cadmus.Domain.Contracts.csproj" />
     <ProjectReference Include="../Cadmus.Domain/Cadmus.Domain.csproj" />
+    <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
 
   <ItemGroup>

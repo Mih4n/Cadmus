@@ -37,9 +37,10 @@ public class Program
     {
         var game = new SnakeGame();
         await game.InitializeAsync();
+        game.Start();
 
         // Game loop
-        while (true)
+        while (game.IsRunning)
         {
             await game.Update();
         }

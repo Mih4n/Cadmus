@@ -1,14 +1,12 @@
-using Cadmus.Domain.Components.Rendering;
-using Cadmus.Domain.Components.Sprites;
+using Cadmus.Domain.Components;
 using Cadmus.Domain.Contracts.Game;
 using Cadmus.Domain.Contracts.Systems;
+using Cadmus.Render;
 
 namespace Cadmus.Systems.Rendering;
 
 public class TextureLoadSystem : ISystem
 {
-    private static string fallbackTexturePath = "Assets/Textures/fallback.png";
-
     public TextureLoadSystem(IGameContext gameContext)
     {
     }
@@ -18,25 +16,24 @@ public class TextureLoadSystem : ISystem
         var scene = gameContext.Scene;
         if (scene is null) return Task.CompletedTask;
 
-        var context = gameContext.Game.GetComponent<VulkanRenderingContext>() ?? throw new Exception();
+        var context = gameContext.Game.GetComponent<VulkanRenderingContext>() ?? throw new Exception("No VulkanRenderingContext found");
 
         foreach (var (_, entity) in scene.Entities)
         {
-            if (!entity.HasComponent<SpriteComponent>()) continue;
+            if (!entity.HasComponent<MaterialComponent>()) continue;
 
-            var sprites = entity.GetComponents<SpriteComponent>();
-            sprites = sprites.Where(s => !s.Loaded);
-
-            foreach (var sprite in sprites)
+            var materials = entity.GetComponents<MaterialComponent>();
+            foreach (var material in materials)
             {
-                sprite.Loaded = true;
+                if (material.GpuTexture != null) continue;
 
-                var path = Path.Combine(AppContext.BaseDirectory, sprite.Path);
+                var path = Path.Combine(AppContext.BaseDirectory, material.TexturePath);
                 if (!File.Exists(path))
                 {
                     continue;
-                }     
+                }
 
+                material.GpuTexture = new VulkanTexture(context.Vulkan, context.Device!, path);
             }
         }
 
