@@ -21,35 +21,62 @@ Cadmus follows the **Entity–Component–System (ECS)** style, where:
 
 This provides flexibility, scalability, and clean separation of responsibilities.
 
+### **Dependency Injection Everywhere**
+
+Every part of the engine — systems, scenes, entities, the game itself and each Vulkan object — is
+resolved from a `Microsoft.Extensions.DependencyInjection` container. Nothing reaches for an ambient
+context or a service locator; a type declares what it needs in its constructor:
+
+```csharp
+public sealed class MainScene(IEntityFactory entities, IGameWindow window) : Scene(entities);
+```
+
+The container is built with `ValidateOnBuild`, so a wiring mistake fails at startup rather than mid-frame.
+
 ### **Vulkan Rendering Backend**
 
-The engine uses **Silk.NET** for Vulkan initialization, window handling, and GPU communication:
+The engine uses **Silk.NET** for Vulkan and windowing:
 
-* Automatic Vulkan instance creation
-* GPU-ready window context
-* Shader-based rendering pipeline
-* Basic sprite mesh + shaders included
+* Instance, device, swapchain, render pass, framebuffers, pipeline and sync objects are all
+  container singletons — creation order and reverse-order disposal come for free
+* Swapchain recreation on resize, with dependent resources rebuilding themselves
+* Per-draw model matrices via a dynamic uniform buffer, so a whole scene records into one command buffer
+* Textures cached by path, one descriptor set each, with a fallback for missing files
+* Optional validation layer, and `IFrameCapture` for saving a presented frame to PNG
 
 ### **Scene Management**
 
-Scenes are:
+Scenes are registered by name and created per load from the container, each in its own service scope:
 
-* Fully composable
-* Capable of holding entities
-* Switchable at runtime
-* Loadable/unloadable via `LoadSceneAsync`
+```csharp
+builder.Services.AddScene<MainScene>("Main");
+await Scenes.LoadAsync("Main");
+```
 
 ### **Sprite System**
 
-The engine includes a simple sprite component system for 2D rendering:
-
 * Automatic quad mesh generation
-* Model matrix calculation (position, scale, rotation)
-* Texture loading system (WIP)
+* Pixel-space orthographic camera by default (origin top-left), perspective when you ask for it
+* Local sprite offsets, rotation, per-sprite size and depth-sorted alpha blending
+* Per-sprite tint, so one white texture covers every flat-coloured shape
+
+### **Input**
+
+`IInputService` reports held keys and per-frame edges (`WasKeyPressed`), injected like anything else.
+The `Key` enum lives in `Cadmus.Core` and carries no backend types.
+
+### **Diagnostics**
+
+A built-in statistics HUD, toggled with **F3**: fps, frame time with min/max over a rolling window,
+frame index, uptime, scene name, entity count, draw calls, resident textures and meshes, render
+target size and GPU name. It reads `IFrameStatistics`, which any code can inject — the overlay is
+just one consumer. Text is rendered from a bundled ASCII atlas, so the engine can draw strings
+anywhere via `BitmapFont`.
 
 ### **Systems Pipeline**
 
-Each engine system — renderer, texture loader, etc. — runs independently via the global `IGameContext`.
+Systems implement `ISystem`, are registered with `AddSystem<T>()` and run in `Order` order each
+frame; `IRenderSystem.Render` submits afterwards.
 
 ---
 
@@ -57,57 +84,44 @@ Each engine system — renderer, texture loader, etc. — runs independently via
 
 ```
 Cadmus/
-  Cadmus.App/              - Game base class & core runtime
-  Cadmus.Domain/           - Components, entities, game logic
-  Cadmus.Domain.Contracts/ - Interfaces shared across modules
-  Cadmus.Render/           - Shaders & rendering utilities
-  Cadmus.Systems/          - Systems (VulkanRenderer, TextureLoadSystem)
-  TestGame/                - Minimal runnable example
+  Cadmus.Core/       - Backend-agnostic interfaces and primitives
+  Cadmus.Engine/     - Components, entities, scenes, geometry
+  Cadmus.Graphics/   - Window, Vulkan objects, GPU resource cache
+  Cadmus.Rendering/  - Render systems that turn a scene into draw calls
+  Cadmus.App/        - Application builder, frame loop, Game base class
+  TestGame/          - Minimal runnable example
 ```
 
 ---
 
-## 🧱 **Core Concepts**
+## 🚀 **Getting Started**
 
-### 🧩 **Entities & Components**
+```csharp
+var builder = CadmusApplication.CreateBuilder();
 
-All game objects inherit from `Entity`, a compose-component container.
-Example components include:
+builder.ConfigureWindow(window =>
+{
+    window.Title = "Cadmus";
+    window.Width = 1280;
+    window.Height = 720;
+});
 
-* `SpriteComponent`
-* `PositionComponent`
-* `Mesh`
-* `VulkanRenderingContext`
+builder.Services.AddScene<MainScene>("Main");
+builder.UseGame<SnakeGame>();
 
-### 🎮 **Game Loop**
+await using var app = builder.Build();
+await app.RunAsync();
+```
 
-`Game` is an abstract base class that:
+Running the demo. The project ships a [devenv](https://devenv.sh) shell that provides the .NET SDK,
+GLFW, the Vulkan loader, validation layers and `glslc` — window creation fails outside it, because
+GLFW resolves X11/Wayland at runtime:
 
-* Initializes Vulkan
-* Registers systems
-* Processes them on each update
-* Manages scenes
-
-### 🌄 **Rendering**
-
-Includes:
-
-* GLSL shaders (`sprite.vert`, `sprite.frag`)
-* Sprite UV/mesh generation
-* Model matrix calculation
-
----
-
-## 🧪 **Test Game**
-
-`TestGame` shows:
-
-* Creating a custom game class
-* Setting up scenes
-* Adding entities
-* Attaching sprite components
-
-Use it as a starting point for building your own gameplay.
+```bash
+devenv shell     # or run `direnv allow` once and just cd into the directory
+run              # build + launch
+doctor           # check the toolchain if something is off
+```
 
 ---
 
@@ -115,7 +129,8 @@ Use it as a starting point for building your own gameplay.
 
 * **C# 14 / .NET 10**
 * **Silk.NET (Vulkan + Windowing)**
-* **GLSL shaders**
+* **Microsoft.Extensions.DependencyInjection**
+* **GLSL shaders (pre-compiled to SPIR-V)**
 * **ECS-style architecture**
 
 ---
@@ -123,14 +138,16 @@ Use it as a starting point for building your own gameplay.
 ## 📌 **Current Status**
 
 This engine is in an **early experimental stage**.
-Several subsystems (render pipeline, texture handling, input, audio, physics) are missing or incomplete.
+Sprite rendering, texture uploading and scene management work end to end; input, audio and physics
+are still missing.
 
 ---
 
 ## 🧭 **Roadmap**
 
-* [ ] Proper Vulkan rendering pipeline
-* [ ] Texture uploading to GPU
+* [x] Proper Vulkan rendering pipeline
+* [x] Texture uploading to GPU
+* [x] Dependency injection across the engine
 * [ ] Material/Shader abstraction
 * [ ] Scene graph
 * [ ] Input system
