@@ -1,48 +1,26 @@
-﻿using System.Numerics;
 using Cadmus.App;
-using Cadmus.Domain.Components;
-using Cadmus.Domain.Components.Sprites;
-using Cadmus.Domain.Entities;
+using Cadmus.Engine.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using TestGame;
+using TestGame.Snake;
 
-public class SnakeGame : Game
+var builder = CadmusApplication.CreateBuilder();
+
+builder.ConfigureWindow(window =>
 {
-    public override async Task InitializeAsync()
-    {
-        RegisterScene("Main", new Scene());
+    window.Title = "Cadmus Snake";
+    window.Width = 2560;
+    window.Height = 1440;
+});
 
-        await LoadSceneAsync("Main");
+builder.Services.AddSingleton(new SnakeSettings());
 
-        if (CurrentScene is null) throw new Exception("No scene defined");
+builder.Services.AddEntity<SnakeEntity>();
+builder.Services.AddEntity<FoodEntity>();
 
-        CurrentScene.AddEntity(new Entity(
-                new SpriteComponent(
-                    "Sprites/Test.png",
-                    new Vector2(10, 10),
-                    new PositionComponent(10, 10, 1)
-                ),
-                new SpriteComponent(
-                    "Sprites/Test2.png",
-                    new Vector2(10, 10),
-                    new PositionComponent(0, 0, 0)
-                ),
-                new PositionComponent(200, 400, 0)
-            )
-        );
-    }
-}
+builder.Services.AddScene<SnakeScene>("Game");
 
-public class Program
-{
-    public static async Task Main(string[] args)
-    {
-        var game = new SnakeGame();
-        await game.InitializeAsync();
-        game.Start();
+builder.UseGame<SnakeGame>();
 
-        // Game loop
-        while (game.IsRunning)
-        {
-            await game.Update();
-        }
-    }
-}
+await using var app = builder.Build();
+await app.RunAsync();
