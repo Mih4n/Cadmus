@@ -9,6 +9,7 @@
 
 # dotenv files
 .env
+.devenv/
 
 # User-specific files
 *.rsuser
@@ -485,3 +486,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# devenv
+.devenv*/
+devenv.local.nix
+.direnv/
