@@ -1,9 +1,8 @@
 using System.Numerics;
-using Cadmus.Core.Components;
 
 namespace Cadmus.Engine.Components;
 
-public class TransformComponent : IComponent
+public class TransformComponent : Component
 {
     public Vector3 Position { get; set; }
     public Quaternion Rotation { get; set; }

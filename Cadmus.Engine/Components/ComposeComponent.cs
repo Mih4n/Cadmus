@@ -3,7 +3,7 @@ using Cadmus.Core.Components;
 
 namespace Cadmus.Engine.Components;
 
-public class ComposeComponent : IComposeComponent
+public class ComposeComponent : Component, IComposeComponent
 {
     protected Dictionary<Type, List<IComponent>> components = [];
 

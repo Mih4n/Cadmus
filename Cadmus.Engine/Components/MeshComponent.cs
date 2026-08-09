@@ -1,9 +1,8 @@
-using Cadmus.Core.Components;
 using Cadmus.Engine.Geometry;
 
 namespace Cadmus.Engine.Components;
 
-public class MeshComponent : IComponent
+public class MeshComponent : Component
 {
     public Mesh Mesh { get; }
 

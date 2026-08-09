@@ -1,9 +1,8 @@
 using System.Numerics;
-using Cadmus.Core.Components;
 
 namespace Cadmus.Engine.Components;
 
-public class PositionComponent(Vector3 vector) : IComponent
+public class PositionComponent(Vector3 vector) : Component
 {
     public Vector3 Vector { get; set; } = vector;
     public float X { get => Vector.X; set => Vector = new Vector3(value, Vector.Y, Vector.Z); }

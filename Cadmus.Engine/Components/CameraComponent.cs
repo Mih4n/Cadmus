@@ -1,5 +1,4 @@
 using System.Numerics;
-using Cadmus.Core.Components;
 
 namespace Cadmus.Engine.Components;
 
@@ -10,7 +9,7 @@ public enum ProjectionMode
     Perspective
 }
 
-public class CameraComponent : IComponent
+public class CameraComponent : Component
 {
     public ProjectionMode Mode { get; set; } = ProjectionMode.Orthographic;
 

@@ -11,5 +11,6 @@
         "**/obj": true,
         "**/bin": true
     },
-    "explorerExclude.backup": {}
+    "explorerExclude.backup": {},
+    "explorerExcludeManager.backup": {}
 }
