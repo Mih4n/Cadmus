@@ -1,8 +1,10 @@
 using Cadmus.Core.Diagnostics;
 using Cadmus.Core.Entities;
+using Cadmus.Core.Events;
 using Cadmus.Core.Scenes;
 using Cadmus.Core.Systems;
 using Cadmus.Engine.Diagnostics;
+using Cadmus.Engine.Events;
 using Cadmus.Engine.Entities;
 using Cadmus.Engine.Scenes;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -18,6 +20,9 @@ public static class EngineServiceCollectionExtensions
         services.TryAddSingleton<ISceneRegistry, SceneRegistry>();
         services.TryAddSingleton<ISceneManager, SceneManager>();
         services.TryAddSingleton<IEntityFactory, EntityFactory>();
+
+        services.AddSystem<EventQueue>();
+        services.TryAddSingleton<IEventQueue>(sp => sp.GetRequiredService<EventQueue>());
 
         services.AddSystem<FrameStatistics>();
         services.TryAddSingleton<IFrameStatistics>(sp => sp.GetRequiredService<FrameStatistics>());

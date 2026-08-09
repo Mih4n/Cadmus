@@ -18,7 +18,7 @@ public sealed class FrameStatistics(ISceneManager scenes) : IFrameStatistics, IS
     private int sampleFilled;
 
     /// <summary>Right after input, long before rendering.</summary>
-    public int Order => int.MinValue + 1;
+    public int Order => int.MinValue + 2;
 
     public float Fps { get; private set; }
     public float FrameTimeMs { get; private set; }

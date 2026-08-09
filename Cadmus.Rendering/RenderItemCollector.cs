@@ -61,7 +61,7 @@ public sealed class RenderItemCollector
 
         foreach (var sprite in entity.GetComponents<SpriteComponent>())
         {
-            if (!sprite.IsVisible)
+            if (!sprite.IsVisible || !sprite.IsActive)
             {
                 continue;
             }
@@ -81,8 +81,8 @@ public sealed class RenderItemCollector
 
     private void CollectMeshes(IEntity entity)
     {
-        if (!entity.TryGetComponent<MeshComponent>(out var mesh) ||
-            !entity.TryGetComponent<MaterialComponent>(out var material))
+        if (!entity.TryGetComponent<MeshComponent>(out var mesh) || !mesh.IsActive ||
+            !entity.TryGetComponent<MaterialComponent>(out var material) || !material.IsActive)
         {
             return;
         }

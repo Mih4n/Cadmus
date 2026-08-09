@@ -36,8 +36,11 @@ public sealed class SilkInputService : IInputService, ISystem, IDisposable
     private readonly HashSet<Core.Input.Key> current = [];
     private readonly HashSet<Core.Input.Key> previous = [];
 
-    /// <summary>Runs first: every other system sees a state that matches this frame's events.</summary>
-    public int Order => int.MinValue;
+    /// <summary>
+    /// Runs right after the event queue is emptied, so every other system sees a keyboard state that
+    /// matches this frame.
+    /// </summary>
+    public int Order => int.MinValue + 1;
 
     public SilkInputService(SilkGameWindow window)
     {
