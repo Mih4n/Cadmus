@@ -3,6 +3,7 @@ using Cadmus.Engine.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using TestGame;
 using TestGame.Snake;
+using TestGame.Snake.Systems;
 
 var builder = CadmusApplication.CreateBuilder();
 
@@ -15,10 +16,15 @@ builder.ConfigureWindow(window =>
 
 builder.Services.AddSingleton(new SnakeSettings());
 
-builder.Services.AddEntity<SnakeEntity>();
-builder.Services.AddEntity<FoodEntity>();
-
 builder.Services.AddScene<SnakeScene>("Game");
+
+// Gameplay is these systems and nothing else; they find their entities by component.
+builder.Services.AddSystem<PlayerInputSystem>();
+builder.Services.AddSystem<SnakeMovementSystem>();
+builder.Services.AddSystem<GameFlowSystem>();
+builder.Services.AddSystem<FoodSystem>();
+builder.Services.AddSystem<BoardPresentationSystem>();
+builder.Services.AddSystem<WindowTitleSystem>();
 
 builder.UseGame<SnakeGame>();
 
