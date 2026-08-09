@@ -13,13 +13,14 @@ This repository also contains a small demo project (**TestGame**) showing how to
 
 ### **Modular Architecture**
 
-Cadmus follows the **Entity–Component–System (ECS)** style, where:
+Cadmus follows the **Entity–Component–System (ECS)** style, strictly:
 
-* **Entities** contain composable components
-* **Components** define data
-* **Systems** process that data each frame
+* **Components** are data, with no behaviour
+* **Entities** are containers of components, with no logic and no services of their own
+* **Systems** hold all behaviour and find their entities by querying for component sets
+* **Events** (`IEventQueue`) let systems cooperate without referring to each other
 
-This provides flexibility, scalability, and clean separation of responsibilities.
+A scene only decides which entities exist; everything that happens per frame is a system.
 
 ### **Dependency Injection Everywhere**
 

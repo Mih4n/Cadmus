@@ -56,11 +56,28 @@ reads `Current`; it is never handed a context object.
 public sealed class MyScene(IEntityFactory entities, IGameWindow window) : Scene(entities) { }
 ```
 
-- Entities are created via `IEntityFactory` (`Scene.Spawn<T>()`), which uses
-  `ActivatorUtilities`, so entity constructors can take services — `SnakeEntity` takes
-  `IInputService` this way.
+**Components are data, systems are behaviour, entities are only containers.** An entity never
+holds logic and never pulls a service to drive itself; a system queries the entities that carry the
+components it cares about:
+
+```csharp
+foreach (var (entity, control, body) in scenes.Current.Query<PlayerControlComponent, SnakeBodyComponent>())
+```
+
+- Queries live in `SceneQueries`: `Query<T>()`, `Query<T1,T2>()`, `Single<T>()`. They take a
+  nullable scene, so a system with no scene loaded simply iterates nothing. Inactive components and
+  disabled entities are skipped.
+- Systems talk to each other through `IEventQueue`, not by calling one another. The mover publishes
+  `FoodEaten`; scoring and respawning are somebody else's problem.
+- The queue is emptied at the very start of a frame (`EventQueue` at `int.MinValue`), so events last
+  exactly one frame and **visibility follows `ISystem.Order`** — a consumer must be ordered after
+  its publisher. TestGame keeps that order in one place, `SystemOrder`.
+- Entities are still created via `IEntityFactory` (`Scene.Spawn(...)`), which uses
+  `ActivatorUtilities` — useful for entity types that need constructor arguments, but the default is
+  a plain entity plus components.
 - Scenes are registered by name — `services.AddScene<MainScene>("Main")` — and loaded through
-  `ISceneManager.LoadAsync("Main")`. Each loaded scene gets its own service scope.
+  `ISceneManager.LoadAsync("Main")`. Each loaded scene gets its own service scope. A scene is
+  composition only: it spawns entities and has no per-frame logic.
 - Systems are registered with `services.AddSystem<T>()` and run in `ISystem.Order` order,
   sequentially (they share scene state). `IRenderSystem.Render` runs after all updates.
 - The container is built with `ValidateOnBuild` — a circular dependency fails at startup, not at
@@ -69,8 +86,10 @@ public sealed class MyScene(IEntityFactory entities, IGameWindow window) : Scene
 - Vulkan objects are singletons in the container. Creation order and reverse-order disposal are the
   container's job — do not add manual init/teardown routines.
 - Keyboard state is `IInputService` (Core) implemented by `SilkInputService` (Graphics), which is
-  itself a system at `int.MinValue` so it refreshes before any gameplay code runs. It polls rather
-  than subscribing: the host pumps the window immediately before, so a poll cannot miss an edge.
+  itself a system at `int.MinValue + 1` so it refreshes before any gameplay code runs. It polls
+  rather than subscribing: the host pumps the window immediately before, so a poll cannot miss an
+  edge. The service stays engine-level; *games* map keys to intent in their own system, reading a
+  control component — see `PlayerInputSystem` and `PlayerControlComponent`.
 - `IFrameStatistics` (Core) carries fps, frame-time min/max, draw calls, entity and GPU-cache counts.
   `FrameStatistics` samples timing as a system; the render layer fills in what only it knows.
   `DebugOverlay` draws it as a screen-space HUD, toggled with **F3**.
