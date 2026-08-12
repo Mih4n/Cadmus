@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Cadmus.Engine/Cadmus.Engine.csproj" />
+  <Project Path="Cadmus.Graphics/Cadmus.Graphics.csproj" />
+  <Project Path="Cadmus.Rendering/Cadmus.Rendering.csproj" />
+</Solution>

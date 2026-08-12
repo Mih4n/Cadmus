@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="../Cadmus.Core/Cadmus.Core.csproj" />
     <ProjectReference Include="../Cadmus.Engine/Cadmus.Engine.csproj" />
   </ItemGroup>
 
