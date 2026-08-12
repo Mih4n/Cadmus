@@ -53,10 +53,16 @@ public sealed class BoardPresentationSystem(
             SetOrigin(entity, board.Origin);
         }
 
+        // How far the current move has progressed, 0 to 1. A dead or paused snake holds its cells.
+        var progress = state is null || isDead || !settings.SmoothMovement
+            ? 1f
+            : Math.Clamp(state.TickTimer / settings.TickSecondsFor(state.Score), 0f, 1f);
+
         foreach (var (entity, body) in scene.Query<SnakeBodyComponent>())
         {
             SetOrigin(entity, board.Origin);
             SyncSnake(entity, body, isDead);
+            PlaceSegments(entity, body, progress);
         }
 
         foreach (var (entity, food) in scene.Query<FoodComponent>())
@@ -103,6 +109,33 @@ public sealed class BoardPresentationSystem(
                     Tint = SegmentColor(body, i, isDead)
                 }
             );
+        }
+    }
+
+    /// <summary>
+    /// Slides every segment from where it was towards where it is. Each one follows the segment
+    /// ahead of it, which is what reads as a snake gliding rather than a row of jumping squares.
+    /// </summary>
+    private void PlaceSegments(IEntity entity, SnakeBodyComponent body, float progress)
+    {
+        var index = 0;
+
+        foreach (var sprite in entity.GetComponents<SpriteComponent>())
+        {
+            if (index >= body.Cells.Count)
+            {
+                break;
+            }
+
+            var from = settings.CellCenter(body.PreviousOf(index), 1f);
+            var to = settings.CellCenter(body.Cells[index], 1f);
+
+            if (sprite.TryGetComponent<PositionComponent>(out var position))
+            {
+                position.Vector = Vector3.Lerp(from, to, progress);
+            }
+
+            index++;
         }
     }
 

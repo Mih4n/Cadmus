@@ -24,6 +24,18 @@ public sealed class SnakeSettings
     /// <summary>How much each eaten apple shortens the tick.</summary>
     public float TickSpeedUp { get; init; } = 0.004f;
 
+    /// <summary>
+    /// Glide the sprites between cells instead of snapping. The rules stay on the grid either way —
+    /// this only affects how the move is drawn.
+    /// </summary>
+    public bool SmoothMovement { get; init; } = true;
+
+    /// <summary>Seconds between moves at the given score. Movement and presentation share it.</summary>
+    public float TickSecondsFor(int score) => MathF.Max(
+        MinTickSeconds,
+        StartTickSeconds - score * TickSpeedUp
+    );
+
     // Authored as sRGB and converted: shader tints are linear, see Colors.
     public Vector4 BoardColor { get; init; } = Colors.FromHex(0x232A36);
     public Vector4 BorderColor { get; init; } = Colors.FromHex(0x3C4657);

@@ -81,6 +81,7 @@ public sealed class GameFlowSystem(
         }
 
         body.Heading = Cell.Right;
+        body.RecordPrevious();
         body.Revision++;
     }
 }

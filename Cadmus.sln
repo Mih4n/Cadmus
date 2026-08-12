@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.Graphics", "Cadmus.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadmus.Rendering", "Cadmus.Rendering\Cadmus.Rendering.csproj", "{2D26F585-BBDC-455C-A247-A30858913BBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetris", "Tetris\Tetris.csproj", "{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x64.Build.0 = Release|Any CPU
 		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D26F585-BBDC-455C-A247-A30858913BBB}.Release|x86.Build.0 = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|x64.Build.0 = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Debug|x86.Build.0 = Debug|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|x64.ActiveCfg = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|x64.Build.0 = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1A5FC06-1D53-4B8A-998A-E4F2AEC6E858}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

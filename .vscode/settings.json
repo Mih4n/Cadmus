@@ -12,5 +12,8 @@
         "**/bin": true
     },
     "explorerExclude.backup": {},
-    "explorerExcludeManager.backup": {}
+    "explorerExcludeManager.backup": {},
+    "cSpell.words": [
+        "Tetris"
+    ]
 }

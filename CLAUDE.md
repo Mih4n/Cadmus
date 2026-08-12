@@ -69,6 +69,10 @@ foreach (var (entity, control, body) in scenes.Current.Query<PlayerControlCompon
   disabled entities are skipped.
 - Systems talk to each other through `IEventQueue`, not by calling one another. The mover publishes
   `FoodEaten`; scoring and respawning are somebody else's problem.
+- **Rules stay discrete, presentation interpolates.** Snake's grid is what makes collision and
+  occupancy simple, so movement keeps ticking cell by cell; `BoardPresentationSystem` slides the
+  sprites between `PreviousCells` and `Cells` by the tick's progress. Smoothing motion is never a
+  reason to make the rules continuous.
 - The queue is emptied at the very start of a frame (`EventQueue` at `int.MinValue`), so events last
   exactly one frame and **visibility follows `ISystem.Order`** — a consumer must be ordered after
   its publisher. TestGame keeps that order in one place, `SystemOrder`.

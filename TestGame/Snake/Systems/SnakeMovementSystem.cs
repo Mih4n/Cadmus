@@ -33,17 +33,16 @@ public sealed class SnakeMovementSystem(
 
         state.TickTimer += time.DeltaSeconds;
 
-        var tickSeconds = MathF.Max(
-            settings.MinTickSeconds,
-            settings.StartTickSeconds - state.Score * settings.TickSpeedUp
-        );
+        var tickSeconds = settings.TickSecondsFor(state.Score);
 
         if (state.TickTimer < tickSeconds)
         {
             return ValueTask.CompletedTask;
         }
 
-        state.TickTimer = 0f;
+        // Carry the remainder instead of zeroing, so the cadence does not drift with the frame rate
+        // and the interpolated glide stays even. Clamped so a long stall cannot bank many ticks.
+        state.TickTimer = MathF.Min(state.TickTimer - tickSeconds, tickSeconds);
 
         foreach (var (entity, body) in scene.Query<SnakeBodyComponent>())
         {
@@ -56,6 +55,7 @@ public sealed class SnakeMovementSystem(
                 control.RequestedHeading = null;
             }
 
+            body.RecordPrevious();
             Step(scene, entity, body);
         }
 
