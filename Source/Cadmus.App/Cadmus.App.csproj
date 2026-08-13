@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../Cadmus.Graphics/Cadmus.Graphics.csproj" />
+    <ProjectReference Include="../Cadmus.Rendering/Cadmus.Rendering.csproj" />
+    <ProjectReference Include="../Cadmus.Core/Cadmus.Core.csproj" />
+    <ProjectReference Include="../Cadmus.Engine/Cadmus.Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+
+</Project>
