@@ -9,8 +9,8 @@ public sealed class Archetype(long signature, IEnumerable<Type> componentTypes)
     public IReadOnlyCollection<Type> ComponentTypes => columns.Keys;
     public IEnumerable<KeyValuePair<Type, IComponentArray>> Columns => columns;
 
-    private readonly Dictionary<Type, IComponentArray> columns = componentTypes.ToDictionary(type => type, CreateColumn);
     private readonly List<IEntity> entities = [];
+    private readonly Dictionary<Type, IComponentArray> columns = componentTypes.ToDictionary(type => type, CreateColumn);
 
     private static IComponentArray CreateColumn(Type componentType)
     {
