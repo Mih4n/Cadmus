@@ -4,7 +4,14 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Cadmus.Engine/Cadmus.Engine.csproj" />
-  <Project Path="Cadmus.Graphics/Cadmus.Graphics.csproj" />
-  <Project Path="Cadmus.Rendering/Cadmus.Rendering.csproj" />
+  <Folder Name="/Source/">
+	  <Project Path="Source/Cadmus.App/Cadmus.App.csproj" />
+	  <Project Path="Source/Cadmus.Core/Cadmus.Core.csproj" />
+	  <Project Path="Source/Cadmus.Engine/Cadmus.Engine.csproj" />
+	  <Project Path="Source/Cadmus.Graphics/Cadmus.Graphics.csproj" />
+	  <Project Path="Source/Cadmus.Rendering/Cadmus.Rendering.csproj" />
+  </Folder>
+  <Folder Name="/Examples/">
+	  <!-- <Project Path="Examples/Snake/Snake.csproj" /> -->
+  </Folder>
 </Solution>
