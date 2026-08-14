@@ -12,6 +12,6 @@
 	  <Project Path="Source/Cadmus.Rendering/Cadmus.Rendering.csproj" />
   </Folder>
   <Folder Name="/Examples/">
-	  <!-- <Project Path="Examples/Snake/Snake.csproj" /> -->
+	  <Project Path="Examples/Snake/Snake.csproj" />
   </Folder>
 </Solution>
